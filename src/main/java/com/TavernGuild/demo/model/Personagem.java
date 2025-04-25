@@ -1,11 +1,17 @@
 package com.TavernGuild.demo.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,4 +29,11 @@ public class Personagem {
     private ClassType classtype;
     private int nivel;
     private int moedas;
+    @ManyToMany
+    @JoinTable(
+        name = "personagem_item",
+        joinColumns = @JoinColumn(name = "personagem_id"),
+        inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
+    private List<Item> itens = new ArrayList<>();
 }

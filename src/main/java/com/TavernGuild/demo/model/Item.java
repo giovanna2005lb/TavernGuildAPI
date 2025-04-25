@@ -1,5 +1,8 @@
 package com.TavernGuild.demo.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -25,5 +28,6 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private RarityType raritytype;
     private int preco;
-    private Personagem dono;
+    @ManyToMany(mappedBy = "itens")
+    private List<Personagem> personagens = new ArrayList<>();
 }
