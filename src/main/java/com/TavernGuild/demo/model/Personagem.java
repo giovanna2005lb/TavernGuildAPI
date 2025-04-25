@@ -28,7 +28,7 @@ public class Personagem {
     @NotBlank(message = "O nome é obrigatório")
     private String nome;
     @Enumerated(EnumType.STRING)
-    private ClassType classtype;
+    private ClassType classe;
     private int nivel;
     private int moedas;
     @ManyToMany

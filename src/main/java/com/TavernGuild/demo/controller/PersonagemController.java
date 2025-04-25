@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.TavernGuild.demo.model.ClassType;
 import com.TavernGuild.demo.model.Personagem;
 import com.TavernGuild.demo.repository.PersonagemRepository;
 
@@ -30,9 +31,14 @@ public class PersonagemController {
         return repository.findAll();
     }
 
-    @GetMapping("{id}")
-    public Personagem get(@PathVariable Long id) {
-        return getPersonagem(id);
+    @GetMapping("nome/{nome}")
+    public Personagem get(@PathVariable String nome) {
+        return repository.findByNome(nome).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("classe/{classe}")
+    public List<Personagem> get(@PathVariable ClassType classe) {
+        return repository.findByClasse(classe).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
@@ -49,11 +55,7 @@ public class PersonagemController {
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
-        repository.delete(getPersonagem(id));
-    }
-
-    private Personagem getPersonagem(Long id) {
-        return repository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        repository.delete(repository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
 }
